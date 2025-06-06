@@ -6,6 +6,7 @@ from page_objects.assessments_tab_page import AssessmentTabPage
 from page_objects.create_test_page import CreateTestPage
 from page_objects.questions_tab_page import QuestionTabPage
 from page_objects.create_question_page import CreateQuestionPage
+from page_objects.delete_question_page import DeleteQuestionPage
 from selenium.webdriver.common.by import By
 
 import time 
@@ -40,5 +41,7 @@ def test_utlra_test_creation():
         CreateQuestionPage(driver).create_boolean_question(question_title="Boolean Question", question_text="This is from an Automated test")
         time.sleep(5)
         assert driver.find_element(By.XPATH, "//div[@id='receipt_nested_id']/span").text == "Success: Question created."
+        DeleteQuestionPage(driver).delete_question()
+        assert int(driver.find_element(By.ID, "totalQuestions").text) == 0
     finally:
         driver.quit()
